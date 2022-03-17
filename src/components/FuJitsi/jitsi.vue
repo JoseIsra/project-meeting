@@ -18,7 +18,7 @@ export default defineComponent({
     const domain = ref("8x8.vc");
     const meet = ref({});
     const options = reactive({
-      roomName: window.xprops.roomId,
+      roomName: `Room-${window.xprops.roomId}`,
       width: "100%",
       height: "100%",
       parentNode: null,
