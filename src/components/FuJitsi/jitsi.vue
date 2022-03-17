@@ -7,21 +7,24 @@
 <script>
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useRoom } from "../../composables/room";
+
 export default defineComponent({
   name: "FuJitsi",
   setup() {
     const router = useRouter();
+    const { roomName } = useRoom();
     const api = ref(null);
     const domain = ref("8x8.vc");
     const meet = ref({});
     const options = reactive({
-      roomName: "FractalUp",
+      roomName: window.xprops.roomId,
       width: "100%",
       height: "100%",
       parentNode: null,
       configOverwrite: {
         startWithAudioMuted: true,
-        prejoinConfig: { enabled: true },
+        prejoinConfig: { enabled: false },
         toolbarButtons: [
           "camera",
           "chat",

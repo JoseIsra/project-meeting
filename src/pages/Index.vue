@@ -8,11 +8,14 @@
 <script>
 import { defineComponent } from "vue";
 import { useRouter } from "vue-router";
+import { useRoom } from "../composables/room";
 
 export default defineComponent({
   setup() {
     const router = useRouter();
+    const { setRoomName } = useRoom();
     const goMeet = () => {
+      setRoomName("SALA CON OTRO NOMBRE");
       void router.push({ name: "meet" });
     };
     return {
