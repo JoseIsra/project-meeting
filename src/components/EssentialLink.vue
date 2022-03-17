@@ -1,12 +1,13 @@
 <template>
-  <section>
-    <div id="meeto" ref="meet"></div>
+  <section class="o-meetWrapper">
+    <div class="o-meetWrapper__container" ref="meet"></div>
   </section>
 </template>
 
 <script>
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
+// window.xprops?.handleLeaveCall para zoid control
 export default defineComponent({
   name: "Index",
   setup() {
@@ -16,8 +17,8 @@ export default defineComponent({
     const meet = ref({});
     const options = reactive({
       roomName: "FractalUp",
-      width: 700,
-      height: 700,
+      width: "100%",
+      height: "100%",
       parentNode: null,
       configOverwrite: {
         startWithAudioMuted: true,
@@ -38,10 +39,10 @@ export default defineComponent({
       interfaceConfigOverwrite: {
         SHOW_PROMOTIONAL_CLOSE_PAGE: false,
         SHOW_CHROME_EXTENSION_BANNER: false,
-        // DEFAULT_LOGO_URL:
-        //   "https://encrypted.fractalup.com/file/MainPublic/fractalup_assets/logo/LogoFU_head.svg",
-        // JITSI_WATERMARK_LINK_:
-        //   "https://encrypted.fractalup.com/file/MainPublic/fractalup_assets/logo/LogoFU_head.svg",
+        DEFAULT_LOGO_URL:
+          "https://encrypted.fractalup.com/file/MainPublic/fractalup_assets/logo/LogoFU_head.svg",
+        JITSI_WATERMARK_LINK_:
+          "https://encrypted.fractalup.com/file/MainPublic/fractalup_assets/logo/LogoFU_head.svg",
         SHOW_BRAND_WATERMARK: false,
         SHOW_JITSI_WATERMARK: false,
       },
@@ -70,3 +71,6 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss" scoped>
+@import "./EssentialLink.scss";
+</style>
