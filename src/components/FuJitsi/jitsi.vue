@@ -8,6 +8,7 @@
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useRoom } from "../../composables/room";
+import FractalJitsi from "../../utils/zoid";
 
 export default defineComponent({
   name: "FuJitsi",
@@ -18,7 +19,7 @@ export default defineComponent({
     const domain = ref("8x8.vc");
     const meet = ref({});
     const options = reactive({
-      roomName: `Room-${window.xprops.roomId}`,
+      roomName: `Room-${window.xprops.roomId}-signed`,
       width: "100%",
       height: "100%",
       parentNode: null,
