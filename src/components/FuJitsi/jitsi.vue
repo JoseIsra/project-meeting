@@ -7,14 +7,12 @@
 <script>
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { useRoom } from "../../composables/room";
 import FractalJitsi from "../../utils/zoid";
 
 export default defineComponent({
   name: "FuJitsi",
   setup() {
     const router = useRouter();
-    const { roomName } = useRoom();
     const api = ref(null);
     const domain = ref("8x8.vc");
     const meet = ref({});
@@ -50,7 +48,7 @@ export default defineComponent({
         SHOW_JITSI_WATERMARK: false,
       },
       userInfo: {
-        displayName: "",
+        displayName: window.xprops.streamName,
       },
     });
     onMounted(() => {
