@@ -62,7 +62,7 @@ export default defineComponent({
       options.parentNode = meet.value;
       api.value = new JitsiMeetExternalAPI(domain.value, options);
       api.value.addEventListener("readyToClose", function () {
-        window.xprops?.handleLeaveCall(2);
+        window.xprops?.handleLeaveCall(2, []);
       });
     };
     return {
