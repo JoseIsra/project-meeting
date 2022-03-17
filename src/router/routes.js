@@ -2,17 +2,7 @@ const routes = [
   {
     path: "/",
     name: "lobby",
-    component: () => import("pages/Index.vue"),
-  },
-  {
-    path: "/meet",
-    name: "meet",
-    component: () => import("components/EssentialLink.vue"),
-  },
-  {
-    path: "/friend",
-    name: "friend",
-    component: () => import("components/Test.vue"),
+    component: () => import("components/FuJitsi"),
   },
 
   // Always leave this as last one,

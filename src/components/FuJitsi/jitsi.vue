@@ -7,9 +7,8 @@
 <script>
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
-// window.xprops?.handleLeaveCall para zoid control
 export default defineComponent({
-  name: "Index",
+  name: "FuJitsi",
   setup() {
     const router = useRouter();
     const api = ref(null);
@@ -61,8 +60,7 @@ export default defineComponent({
       options.parentNode = meet.value;
       api.value = new JitsiMeetExternalAPI(domain.value, options);
       api.value.addEventListener("readyToClose", function () {
-        console.log("cerrando sala con router->");
-        router.push({ name: "lobby" });
+        window.xprops?.handleLeaveCall();
       });
     };
     return {
@@ -72,5 +70,5 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-@import "./EssentialLink.scss";
+@import "./jitsi.scss";
 </style>
