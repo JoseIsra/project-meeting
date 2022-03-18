@@ -17,13 +17,13 @@ export default defineComponent({
     const domain = ref("8x8.vc");
     const meet = ref({});
     const options = reactive({
-      roomName: `Room-${window.xprops.roomId}-signed`,
+      roomName: `Room-${window.xprops.roomId}-live`,
       width: "100%",
       height: "100%",
       parentNode: null,
       configOverwrite: {
         startWithAudioMuted: true,
-        prejoinConfig: { enabled: false },
+        prejoinConfig: { enabled: true },
         toolbarButtons: [
           "camera",
           "chat",
@@ -42,13 +42,9 @@ export default defineComponent({
         SHOW_CHROME_EXTENSION_BANNER: false,
         DEFAULT_LOGO_URL:
           "https://encrypted.fractalup.com/file/MainPublic/fractalup_assets/logo/LogoFU_head.svg",
-        JITSI_WATERMARK_LINK_:
-          "https://encrypted.fractalup.com/file/MainPublic/fractalup_assets/logo/LogoFU_head.svg",
+        JITSI_WATERMARK_LINK_: "https://www.fractalup.com",
         SHOW_BRAND_WATERMARK: false,
         SHOW_JITSI_WATERMARK: false,
-      },
-      userInfo: {
-        displayName: window.xprops.streamName,
       },
     });
     onMounted(() => {
