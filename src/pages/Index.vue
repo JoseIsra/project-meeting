@@ -15,7 +15,7 @@ export default defineComponent({
     const router = useRouter();
     const { setRoomName } = useRoom();
     const goMeet = () => {
-      setRoomName("SALA CON OTRO NOMBRE");
+      setRoomName("jitsi.fractaluptest.xyz");
       void router.push({ name: "meet" });
     };
     return {
