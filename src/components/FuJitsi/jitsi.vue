@@ -14,10 +14,10 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const api = ref(null);
-    const domain = ref("8x8.vc");
+    const domain = ref("meet.jit.si");
     const meet = ref({});
     const options = reactive({
-      roomName: `Room-${window.xprops.roomId}-live`,
+      roomName: `Conference Room ${window.xprops.roomId} live now🟢`,
       width: "100%",
       height: "100%",
       parentNode: null,
@@ -45,6 +45,8 @@ export default defineComponent({
         JITSI_WATERMARK_LINK_: "https://www.fractalup.com",
         SHOW_BRAND_WATERMARK: false,
         SHOW_JITSI_WATERMARK: false,
+        HIDE_DEEP_LINKING_LOGO: true,
+        SHOW_WATERMARK_FOR_GUESTS: false,
       },
     });
     onMounted(() => {
