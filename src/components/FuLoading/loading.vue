@@ -12,8 +12,10 @@
     </figure>
 
     <div class="row items-center">
-      {{ pageMessage }}
-      <q-spinner-dots class="q-ml-md" size="2em" />
+      <label :style="{ fontSize: '2rem' }">
+        {{ pageMessage }}
+      </label>
+      <q-spinner-dots class="q-ml-md" size="3em" />
     </div>
   </div>
 </template>
