@@ -84,9 +84,9 @@ export default defineComponent({
       api.value.addEventListener("videoConferenceLeft", function () {
         window.xprops?.handleLeaveCall(2, []);
       });
-      api.value.addEventListener("readyToClose", function () {
-        window.xprops?.handleLeaveCall(2, []);
-      });
+      // api.value.addEventListener("readyToClose", function () {
+      //   window.xprops?.handleLeaveCall(2, []);
+      // });
     };
     return {
       meet,
