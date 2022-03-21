@@ -1,5 +1,6 @@
 <template>
   <section class="o-meetWrapper">
+    <fu-loading v-if="loading" />
     <div class="o-meetWrapper__container" ref="meet"></div>
   </section>
 </template>
@@ -7,15 +8,18 @@
 <script>
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import FuLoading from "../FuLoading";
 import FractalJitsi from "../../utils/zoid";
 
 export default defineComponent({
   name: "FuJitsi",
+  components: { FuLoading },
   setup() {
     const router = useRouter();
     const api = ref(null);
     const domain = ref("");
     const meet = ref({});
+    const loading = ref(true);
     const filteredToolbarButtons = ref([
       "camera",
       "chat",
@@ -73,12 +77,20 @@ export default defineComponent({
         options.configOverwrite.toolbarButtons = filteredToolbarButtons.value;
       }
       api.value = new JitsiMeetExternalAPI(domain.value, options);
+      setTimeout(() => {
+        loading.value = false;
+      }, 1300);
+
+      api.value.addEventListener("videoConferenceLeft", function () {
+        window.xprops?.handleLeaveCall(2, []);
+      });
       api.value.addEventListener("readyToClose", function () {
         window.xprops?.handleLeaveCall(2, []);
       });
     };
     return {
       meet,
+      loading,
     };
   },
 });
