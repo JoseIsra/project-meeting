@@ -1,9 +1,9 @@
 <template>
   <div
-    class="fullscreen text-white text-center q-pa-md column justify-center items-center"
+    class="z-top fullscreen text-white text-center q-pa-md column justify-center items-center"
     :style="{ background: '#36393f' }"
   >
-    <figure>
+    <figure v-show="logo">
       <img
         :style="{ width: '40vw', 'max-width': '300px', 'min-width': '200px' }"
         src="https://encrypted.fractalup.com/file/MainPublic/fractalup_assets/logo/logo_cooperate.svg"
@@ -12,17 +12,34 @@
     </figure>
 
     <div class="row items-center">
-      Loading
+      {{ pageMessage }}
       <q-spinner-dots class="q-ml-md" size="2em" />
     </div>
   </div>
 </template>
 
 <script>
+import { computed } from "vue";
+
 export default {
   name: "FuLoading",
-  setup() {
-    return {};
+  props: {
+    logo: {
+      type: Boolea,
+      default: true,
+    },
+    closePage: {
+      type: Boolea,
+      default: false,
+    },
+  },
+  setup(props) {
+    const pageMessage = computed(() => {
+      return props.closePage ? "Closing meeting" : "Loading";
+    });
+    return {
+      pageMessage,
+    };
   },
 };
 </script>

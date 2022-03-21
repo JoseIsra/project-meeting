@@ -1,6 +1,10 @@
 <template>
   <section class="o-meetWrapper">
-    <fu-loading v-if="loading" />
+    <fu-loading
+      v-if="loading || showClosePage"
+      :logo="showLogo"
+      :closePage="showClosePage"
+    />
     <div class="o-meetWrapper__container" ref="meet"></div>
   </section>
 </template>
@@ -20,6 +24,8 @@ export default defineComponent({
     const domain = ref("");
     const meet = ref({});
     const loading = ref(true);
+    const showLogo = window.xprops.completedJitsi;
+    const showClosePage = ref(false);
     const filteredToolbarButtons = ref([
       "camera",
       "chat",
@@ -82,6 +88,7 @@ export default defineComponent({
       }, 1300);
 
       api.value.addEventListener("videoConferenceLeft", function () {
+        showClosePage.value = true;
         window.xprops?.handleLeaveCall(2, []);
       });
       // api.value.addEventListener("readyToClose", function () {
@@ -91,6 +98,8 @@ export default defineComponent({
     return {
       meet,
       loading,
+      showLogo,
+      showClosePage,
     };
   },
 });
