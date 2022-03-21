@@ -25,11 +25,11 @@ export default {
   name: "FuLoading",
   props: {
     logo: {
-      type: Boolea,
+      type: Boolean,
       default: true,
     },
     closePage: {
-      type: Boolea,
+      type: Boolean,
       default: false,
     },
   },
