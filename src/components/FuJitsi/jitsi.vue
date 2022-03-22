@@ -5,12 +5,23 @@
       :logo="showLogo"
       :closePage="showClosePage"
     />
-    <div class="o-meetWrapper__container" ref="meet"></div>
+    <div
+      class="o-meetWrapper__container"
+      ref="meet"
+      :style="heightObjectStyle"
+    ></div>
   </section>
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted } from "vue";
+import {
+  defineComponent,
+  ref,
+  reactive,
+  onMounted,
+  onBeforeUnmount,
+  computed,
+} from "vue";
 import { useRouter } from "vue-router";
 import FuLoading from "../FuLoading";
 import FractalJitsi from "../../utils/zoid";
@@ -26,6 +37,7 @@ export default defineComponent({
     const loading = ref(true);
     const showLogo = window.xprops.completedJitsi;
     const showClosePage = ref(false);
+    let vh = ref(window.innerHeight * 0.01);
     const filteredToolbarButtons = ref([
       "camera",
       "chat",
@@ -47,6 +59,7 @@ export default defineComponent({
       configOverwrite: {
         startWithAudioMuted: true,
         prejoinConfig: { enabled: true },
+        disableDeepLinking: true,
       },
       interfaceConfigOverwrite: {
         SHOW_PROMOTIONAL_CLOSE_PAGE: false,
@@ -58,17 +71,29 @@ export default defineComponent({
         SHOW_JITSI_WATERMARK: false,
         HIDE_DEEP_LINKING_LOGO: true,
         SHOW_WATERMARK_FOR_GUESTS: false,
+        MOBILE_APP_PROMO: false,
       },
     });
+
+    const handleDeviceHeight = () => {
+      vh.value = window.innerHeight * 0.01;
+    };
+
+    // domain.value = true ? "jitsi.fractaluptest.xyz" : "meet.jit.si";
     domain.value = window.xprops.completedJitsi
       ? "jitsi.fractaluptest.xyz"
       : "meet.jit.si";
+
+    const heightObjectStyle = computed(() => ({
+      "--vh": String(vh.value) + "px",
+    }));
 
     let script = document.createElement("script");
     script.src = `https://${domain.value}/external_api.js`;
     document.body.appendChild(script);
 
     onMounted(() => {
+      window.addEventListener("resize", handleDeviceHeight);
       setTimeout(() => {
         if (JitsiMeetExternalAPI) {
           initJitsi();
@@ -95,11 +120,17 @@ export default defineComponent({
       //   window.xprops?.handleLeaveCall(2, []);
       // });
     };
+
+    onBeforeUnmount(() => {
+      window.removeEventListener("resize", handleDeviceHeight);
+    });
+
     return {
       meet,
       loading,
       showLogo,
       showClosePage,
+      heightObjectStyle,
     };
   },
 });

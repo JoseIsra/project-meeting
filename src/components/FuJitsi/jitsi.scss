@@ -1,8 +1,8 @@
 .o-meetWrapper {
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
   &__container {
-    height: 100%;
+    height: calc(var(--vh, 1vh) * 100);
     width: 100%;
   }
 }
