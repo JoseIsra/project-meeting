@@ -36,6 +36,7 @@ export default defineComponent({
     const meet = ref({});
     const loading = ref(true);
     const showLogo = window.xprops.completedJitsi;
+    // const showLogo = true;
     const showClosePage = ref(false);
     let vh = ref(window.innerHeight * 0.01);
     const filteredToolbarButtons = ref([
@@ -53,12 +54,14 @@ export default defineComponent({
 
     const options = reactive({
       roomName: `Conference Room ${window.xprops.roomId} live now🟢`,
+      // roomName: `Conference Room  live now🟢`,
       width: "100%",
       height: "100%",
       parentNode: null,
       configOverwrite: {
         startWithAudioMuted: true,
         prejoinConfig: { enabled: true },
+        disableDeepLinking: true,
       },
       interfaceConfigOverwrite: {
         SHOW_PROMOTIONAL_CLOSE_PAGE: false,
