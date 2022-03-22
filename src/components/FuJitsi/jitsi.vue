@@ -61,7 +61,7 @@ export default defineComponent({
       configOverwrite: {
         startWithAudioMuted: true,
         prejoinConfig: { enabled: true },
-        disableDeepLinking: true,
+        // disableDeepLinking: true,
       },
       interfaceConfigOverwrite: {
         SHOW_PROMOTIONAL_CLOSE_PAGE: false,
