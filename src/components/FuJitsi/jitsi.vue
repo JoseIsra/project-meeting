@@ -138,7 +138,7 @@ export default defineComponent({
       }, 1300);
 
       api.value.addEventListener("videoConferenceLeft", function () {
-        if (!isModerator.value) {
+        if (!isModerator) {
           showClosePage.value = true;
           window.xprops?.handleParticipantLeave();
         } else {
