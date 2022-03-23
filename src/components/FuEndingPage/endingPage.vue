@@ -29,11 +29,11 @@
 export default {
   setup(_, { emit }) {
     const noEndingMeeting = () => {
-      emit("ending-meeting");
+      emit("no-ending-meeting");
     };
 
     const endingMeeting = () => {
-      emit("no-ending-meeting");
+      emit("ending-meeting");
     };
 
     return {
