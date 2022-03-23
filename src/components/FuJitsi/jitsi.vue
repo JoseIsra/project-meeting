@@ -5,6 +5,11 @@
       :logo="showLogo"
       :closePage="showClosePage"
     />
+    <fu-ending-page
+      v-if="showEndingPage"
+      @ending-meeting="handleEndingMeeting"
+      @no-ending-meeting="handleNoEndingMeeting"
+    />
     <div
       class="o-meetWrapper__container"
       ref="meet"
@@ -24,11 +29,15 @@ import {
 } from "vue";
 import { useRouter } from "vue-router";
 import FuLoading from "../FuLoading";
+import FuEndingPage from "../FuEndingPage";
 import FractalJitsi from "../../utils/zoid";
 
 export default defineComponent({
   name: "FuJitsi",
-  components: { FuLoading },
+  components: {
+    FuLoading,
+    FuEndingPage,
+  },
   setup() {
     const router = useRouter();
     const api = ref(null);
@@ -36,9 +45,10 @@ export default defineComponent({
     const meet = ref({});
     const loading = ref(true);
     const showLogo = window.xprops.completedJitsi;
-    // const showLogo = true;
     const showClosePage = ref(false);
     let vh = ref(window.innerHeight * 0.01);
+    const isModerator = window.xprops.moderator;
+    const showEndingPage = ref(false);
     const filteredToolbarButtons = ref([
       "camera",
       "chat",
@@ -104,6 +114,19 @@ export default defineComponent({
         }
       }, 1000);
     });
+
+    const handleNoEndingMeeting = () => {
+      showEndingPage.value = false;
+      showClosePage.value = true;
+      window.xprops?.handleParticipantLeave();
+    };
+
+    const handleEndingMeeting = () => {
+      showEndingPage.value = false;
+      showClosePage.value = true;
+      window.xprops?.handleLeaveCall(2, []);
+    };
+
     const initJitsi = () => {
       options.parentNode = meet.value;
       if (!window.xprops.completedJitsi) {
@@ -115,12 +138,13 @@ export default defineComponent({
       }, 1300);
 
       api.value.addEventListener("videoConferenceLeft", function () {
-        showClosePage.value = true;
-        window.xprops?.handleLeaveCall(2, []);
+        if (!isModerator.value) {
+          showClosePage.value = true;
+          window.xprops?.handleParticipantLeave();
+        } else {
+          showEndingPage.value = true;
+        }
       });
-      // api.value.addEventListener("readyToClose", function () {
-      //   window.xprops?.handleLeaveCall(2, []);
-      // });
     };
 
     onBeforeUnmount(() => {
@@ -133,6 +157,9 @@ export default defineComponent({
       showLogo,
       showClosePage,
       heightObjectStyle,
+      showEndingPage,
+      handleNoEndingMeeting,
+      handleEndingMeeting,
     };
   },
 });
