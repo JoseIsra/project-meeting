@@ -138,12 +138,14 @@ export default defineComponent({
       }, 1300);
 
       api.value.addEventListener("videoConferenceLeft", function () {
-        if (!isModerator) {
-          showClosePage.value = true;
-          window.xprops?.handleParticipantLeave();
-        } else {
-          showEndingPage.value = true;
-        }
+        window.xprops?.handleLeaveCall(2, []);
+
+        // if (!isModerator) {
+        //   showClosePage.value = true;
+        //   window.xprops?.handleParticipantLeave();
+        // } else {
+        //   showEndingPage.value = true;
+        // }
       });
     };
 
