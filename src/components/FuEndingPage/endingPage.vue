@@ -5,7 +5,7 @@
     <div class="a-endingPage__content">
       <h5>¿Quieres finalizar la llamada?</h5>
     </div>
-    <div class="a-endingPage__actions q-px-sm row items-center justify-around">
+    <div class="a-endingPage__actions q-px-sm row reverse justify-around">
       <q-btn
         dense
         class="a-endingPage__btn --accept q-py-sm"
@@ -18,7 +18,7 @@
         dense
         class="a-endingPage__btn --cancel q-py-sm"
         label="No"
-        color="black"
+        flat
         @click="noEndingMeeting"
       />
     </div>
