@@ -49,6 +49,7 @@ export default defineComponent({
     let vh = ref(window.innerHeight * 0.01);
     const isModerator = window.xprops.moderator;
     const showEndingPage = ref(false);
+    const userNameZoid = window.xprops.userName;
     const filteredToolbarButtons = ref([
       "camera",
       "chat",
@@ -57,9 +58,31 @@ export default defineComponent({
       "fullscreen",
       "hangup",
       "filmstrip",
-      "participants-panel",
       "raisehand",
       "tileview",
+    ]);
+    const complexToolbarButtons = ref([
+      "camera",
+      "chat",
+      "closedcaptions",
+      "desktop",
+      "download",
+      "etherpad",
+      "filmstrip",
+      "fullscreen",
+      "hangup",
+      "highlight",
+      "microphone",
+      "mute-everyone",
+      "mute-video-everyone",
+      "profile",
+      "raisehand",
+      "select-background",
+      "shortcuts",
+      "stats",
+      "tileview",
+      "toggle-camera",
+      "participants-pane",
     ]);
 
     const options = reactive({
@@ -68,10 +91,22 @@ export default defineComponent({
       width: "100%",
       height: "100%",
       parentNode: null,
+      lang: "es-PE",
+      userInfo: {
+        displayName: userNameZoid,
+      },
       configOverwrite: {
         startWithAudioMuted: true,
         prejoinConfig: { enabled: true },
         disableDeepLinking: true,
+        defaultLanguage: "es-PE",
+        disablePolls: true,
+        remoteVideoMenu: {
+          disableGrantModerator: true,
+          disablePrivateChat: true,
+        },
+        hideAddRoomButton: true,
+        toolbarButtons: complexToolbarButtons.value,
       },
       interfaceConfigOverwrite: {
         SHOW_PROMOTIONAL_CLOSE_PAGE: false,
@@ -108,6 +143,7 @@ export default defineComponent({
       window.addEventListener("resize", handleDeviceHeight);
       setTimeout(() => {
         if (JitsiMeetExternalAPI) {
+          console.log("INICIANDO IFRAME DESDE LOGIN");
           initJitsi();
         } else {
           console.log("NO LOAD");
@@ -131,6 +167,12 @@ export default defineComponent({
       options.parentNode = meet.value;
       if (!window.xprops.completedJitsi) {
         options.configOverwrite.toolbarButtons = filteredToolbarButtons.value;
+      } else if (isModerator) {
+        options.configOverwrite.toolbarButtons = [
+          ...complexToolbarButtons.value,
+          "sharevideo",
+          "shareaudio",
+        ];
       }
       api.value = new JitsiMeetExternalAPI(domain.value, options);
       setTimeout(() => {

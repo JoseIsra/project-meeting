@@ -4,6 +4,11 @@ const routes = [
     name: "lobby",
     component: () => import("components/FuJitsi"),
   },
+  // {
+  //   path: "/meet",
+  //   name: "meet",
+  //   component: () => import("components/FuJitsi"),
+  // },
 
   // Always leave this as last one,
   // but you can also remove it
