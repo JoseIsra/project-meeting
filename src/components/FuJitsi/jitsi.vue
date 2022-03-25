@@ -104,6 +104,7 @@ export default defineComponent({
         remoteVideoMenu: {
           disableGrantModerator: true,
           disablePrivateChat: true,
+          disableKick: true,
         },
         hideAddRoomButton: true,
         toolbarButtons: complexToolbarButtons.value,
