@@ -60,6 +60,7 @@ export default defineComponent({
       "filmstrip",
       "raisehand",
       "tileview",
+      "participants-pane",
     ]);
     const complexToolbarButtons = ref([
       "camera",
@@ -144,7 +145,6 @@ export default defineComponent({
       window.addEventListener("resize", handleDeviceHeight);
       setTimeout(() => {
         if (JitsiMeetExternalAPI) {
-          console.log("INICIANDO IFRAME DESDE LOGIN");
           initJitsi();
         } else {
           console.log("NO LOAD");
@@ -181,7 +181,7 @@ export default defineComponent({
       }, 1300);
 
       api.value.addEventListener("videoConferenceLeft", function () {
-        if (!isModerator) {
+        if (!isModerator || !window.xprops.completedJitsi) {
           showClosePage.value = true;
           window.xprops?.handleParticipantLeave();
         } else {
