@@ -178,7 +178,7 @@ export default defineComponent({
       api.value = new JitsiMeetExternalAPI(domain.value, options);
       setTimeout(() => {
         loading.value = false;
-      }, 1300);
+      }, 1500);
 
       api.value.addEventListener("videoConferenceLeft", function () {
         if (!isModerator) {
