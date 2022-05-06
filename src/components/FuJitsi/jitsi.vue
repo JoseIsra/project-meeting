@@ -74,8 +74,6 @@ export default defineComponent({
       "hangup",
       "highlight",
       "microphone",
-      "mute-everyone",
-      "mute-video-everyone",
       "profile",
       "raisehand",
       "select-background",
@@ -88,7 +86,7 @@ export default defineComponent({
 
     const options = reactive({
       roomName: `Conference Room ${window.xprops.roomId.toLowerCase()} live now🟢`,
-      // roomName: `Conference Room  live now🟢`,
+      roomName: `Conference Room  live now🟢`,
       width: "100%",
       height: "100%",
       parentNode: null,
@@ -128,9 +126,10 @@ export default defineComponent({
       vh.value = window.innerHeight * 0.01;
     };
 
-    // domain.value = true ? "jitsi.fractaluptest.xyz" : "meet.jit.si";
+    // domain.value = true ? "coop.fractalup.com" : "meet.jit.si";
+    // https://coop.fractalup.com/testingsalafractalup
     domain.value = window.xprops.completedJitsi
-      ? "jitsi.fractaluptest.xyz"
+      ? "coop.fractalup.com"
       : "meet.jit.si";
 
     const heightObjectStyle = computed(() => ({
@@ -173,6 +172,9 @@ export default defineComponent({
           ...complexToolbarButtons.value,
           "sharevideo",
           "shareaudio",
+          "recording",
+          "mute-everyone",
+          "mute-video-everyone",
         ];
       }
       api.value = new JitsiMeetExternalAPI(domain.value, options);
