@@ -86,7 +86,7 @@ export default defineComponent({
 
     const options = reactive({
       roomName: `Conference Room ${window.xprops.roomId.toLowerCase()} live now🟢`,
-      roomName: `Conference Room  live now🟢`,
+      // roomName: `Conference Room  live now🟢`,
       width: "100%",
       height: "100%",
       parentNode: null,
