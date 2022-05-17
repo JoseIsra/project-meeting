@@ -27,11 +27,9 @@ import {
   onBeforeUnmount,
   computed,
 } from "vue";
-import { useRouter } from "vue-router";
 import FuLoading from "../FuLoading";
 import FuEndingPage from "../FuEndingPage";
 import FractalJitsi from "../../utils/zoid";
-
 export default defineComponent({
   name: "FuJitsi",
   components: {
@@ -39,7 +37,6 @@ export default defineComponent({
     FuEndingPage,
   },
   setup() {
-    const router = useRouter();
     const api = ref(null);
     const domain = ref("");
     const meet = ref({});
@@ -122,6 +119,8 @@ export default defineComponent({
       },
     });
 
+    const regexConferenceName = /[`~!@#$%^&*()_|+\-=?;:'"<>\{\}\[\]\\\/]/gi;
+
     const handleDeviceHeight = () => {
       vh.value = window.innerHeight * 0.01;
     };
@@ -165,6 +164,11 @@ export default defineComponent({
 
     const initJitsi = () => {
       options.parentNode = meet.value;
+      options.roomName = options.roomName
+        .trim()
+        .replace(regexConferenceName, "")
+        .replace(/\s/g, "_")
+        .toLowerCase();
       if (!window.xprops.completedJitsi) {
         options.configOverwrite.toolbarButtons = filteredToolbarButtons.value;
       } else if (isModerator) {
@@ -179,6 +183,7 @@ export default defineComponent({
       }
       api.value = new JitsiMeetExternalAPI(domain.value, options);
       setTimeout(() => {
+        api.value.executeCommand("subject", " ");
         loading.value = false;
       }, 1500);
 
