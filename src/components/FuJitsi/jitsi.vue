@@ -147,7 +147,7 @@ export default defineComponent({
         } else {
           console.log("NO LOAD");
         }
-      }, 1000);
+      }, 1200);
     });
 
     const handleNoEndingMeeting = () => {
