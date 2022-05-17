@@ -164,11 +164,11 @@ export default defineComponent({
 
     const initJitsi = () => {
       options.parentNode = meet.value;
-      options.roomName = options.roomName
-        .trim()
-        .replace(regexConferenceName, "")
-        .replace(/\s/g, "_")
-        .toLowerCase();
+      // options.roomName = options.roomName
+      //   .trim()
+      //   .replace(regexConferenceName, "")
+      //   .replace(/\s/g, "_")
+      //   .toLowerCase();
       if (!window.xprops.completedJitsi) {
         options.configOverwrite.toolbarButtons = filteredToolbarButtons.value;
       } else if (isModerator) {
