@@ -1,5 +1,5 @@
 <template>
-  <section class="o-meetWrapper">
+  <section class="o-meetWrapper fullscreen">
     <fu-loading
       v-if="loading || showClosePage"
       :logo="showLogo"
@@ -11,7 +11,7 @@
       @no-ending-meeting="handleNoEndingMeeting"
     />
     <div
-      class="o-meetWrapper__container"
+      class="o-meetWrapper__container full-height"
       ref="meet"
       :style="heightObjectStyle"
     ></div>
@@ -41,12 +41,13 @@ export default defineComponent({
     const domain = ref("");
     const meet = ref({});
     const loading = ref(true);
-    const showLogo = window.xprops.completedJitsi;
+    const showLogo = window?.xprops?.completedJitsi || true;
     const showClosePage = ref(false);
     let vh = ref(window.innerHeight * 0.01);
-    const isModerator = window.xprops.moderator;
+    const isModerator = window?.xprops?.moderator || true;
     const showEndingPage = ref(false);
-    const userNameZoid = window.xprops.userName;
+    const userNameZoid = window?.xprops?.userName || "";
+    const jitsiCompleted = window?.xprops?.completedJitsi || true;
     const filteredToolbarButtons = ref([
       "camera",
       "chat",
@@ -83,7 +84,7 @@ export default defineComponent({
 
     const options = reactive({
       roomName: `Conference Room ${window.xprops.roomId.toLowerCase()} live now🟢`,
-      // roomName: `Conference Room  live now🟢`,
+      // roomName: `Conference Room name live now🟢`,
       width: "100%",
       height: "100%",
       parentNode: null,
@@ -127,9 +128,7 @@ export default defineComponent({
 
     // domain.value = true ? "coop.fractalup.com" : "meet.jit.si";
     // https://coop.fractalup.com/testingsalafractalup
-    domain.value = window.xprops.completedJitsi
-      ? "coop.fractalup.com"
-      : "meet.jit.si";
+    domain.value = jitsiCompleted ? "coop.fractalup.com" : "meet.jit.si";
 
     const heightObjectStyle = computed(() => ({
       "--vh": String(vh.value) + "px",
@@ -145,6 +144,7 @@ export default defineComponent({
         if (JitsiMeetExternalAPI) {
           initJitsi();
         } else {
+          window.location.reload();
           console.log("NO LOAD");
         }
       }, 1200);
@@ -169,7 +169,7 @@ export default defineComponent({
         .replace(regexConferenceName, "")
         .replace(/\s/g, "_")
         .toLowerCase();
-      if (!window.xprops.completedJitsi) {
+      if (!jitsiCompleted) {
         options.configOverwrite.toolbarButtons = filteredToolbarButtons.value;
       } else if (isModerator) {
         options.configOverwrite.toolbarButtons = [
