@@ -41,13 +41,13 @@ export default defineComponent({
     const domain = ref("");
     const meet = ref({});
     const loading = ref(true);
-    const showLogo = window?.xprops?.completedJitsi || true;
+    const showLogo = window?.xprops?.completedJitsi;
     const showClosePage = ref(false);
     let vh = ref(window.innerHeight * 0.01);
-    const isModerator = window?.xprops?.moderator || true;
+    const isModerator = window?.xprops?.moderator;
     const showEndingPage = ref(false);
-    const userNameZoid = window?.xprops?.userName || "";
-    const jitsiCompleted = window?.xprops?.completedJitsi || true;
+    const userNameZoid = window?.xprops?.userName;
+    const jitsiCompleted = window?.xprops?.completedJitsi;
     const filteredToolbarButtons = ref([
       "camera",
       "chat",
@@ -161,7 +161,6 @@ export default defineComponent({
       showClosePage.value = true;
       window.xprops?.handleLeaveCall(2, []);
     };
-
     const initJitsi = () => {
       options.parentNode = meet.value;
       options.roomName = options.roomName
