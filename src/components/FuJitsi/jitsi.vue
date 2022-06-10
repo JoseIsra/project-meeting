@@ -48,6 +48,10 @@ export default defineComponent({
     const showEndingPage = ref(false);
     const userNameZoid = window?.xprops?.userName;
     const jitsiCompleted = window?.xprops?.completedJitsi;
+    const withPrejoinView = window?.xprops?.prejoinView;
+    const startWithVideoMuted = window?.xprops?.startWithVideoMuted;
+    const isMultichat = window?.xprops?.isMultichat;
+
     const filteredToolbarButtons = ref([
       "camera",
       "chat",
@@ -60,6 +64,7 @@ export default defineComponent({
       "tileview",
       "participants-pane",
     ]);
+
     const complexToolbarButtons = ref([
       "camera",
       "chat",
@@ -74,12 +79,19 @@ export default defineComponent({
       "microphone",
       "profile",
       "raisehand",
-      "select-background",
       "shortcuts",
       "stats",
       "tileview",
       "toggle-camera",
       "participants-pane",
+    ]);
+
+    const multiChatToolBar = ref([
+      "camera",
+      "desktop",
+      "microphone",
+      "hangup",
+      "filmstrip",
     ]);
 
     const options = reactive({
@@ -94,7 +106,8 @@ export default defineComponent({
       },
       configOverwrite: {
         startWithAudioMuted: true,
-        prejoinConfig: { enabled: true },
+        startWithVideoMuted,
+        prejoinConfig: { enabled: withPrejoinView },
         disableDeepLinking: true,
         defaultLanguage: "es-PE",
         disablePolls: true,
@@ -179,6 +192,8 @@ export default defineComponent({
           "mute-everyone",
           "mute-video-everyone",
         ];
+      } else if (isMultichat) {
+        options.configOverwrite.toolbarButtons = multiChatToolBar.value;
       }
       api.value = new JitsiMeetExternalAPI(domain.value, options);
       setTimeout(() => {
