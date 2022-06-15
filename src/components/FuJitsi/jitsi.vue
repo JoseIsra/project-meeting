@@ -192,9 +192,10 @@ export default defineComponent({
           "mute-everyone",
           "mute-video-everyone",
         ];
-      } else if (isMultichat) {
-        options.configOverwrite.toolbarButtons = multiChatToolBar.value;
       }
+      //  else if (isMultichat) {
+      //   options.configOverwrite.toolbarButtons = multiChatToolBar.value;
+      // }
       api.value = new JitsiMeetExternalAPI(domain.value, options);
       setTimeout(() => {
         api.value.executeCommand("subject", " ");
